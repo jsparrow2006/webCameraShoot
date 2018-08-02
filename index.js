@@ -15,8 +15,8 @@ class WebCamShoot {
         this.cam = document.getElementById('cam');
         this.canvas = document.querySelector('#canvas');
         let scale = 1;
-        this.brigtness = 1;
-        this.contrast = 1;
+        this.Brightness = 0.7;
+        this.contrast = 1.2;
         this.isSettings = false;
 
         cam.addEventListener("contextmenu", this.settings.bind(this), false);
@@ -140,11 +140,11 @@ class WebCamShoot {
                 <div id="panelSettings">
                     <div class="wraperRange">
                         <span>Яркость:</span>
-                        <input type="range">
+                        <input id="camBrightness" type="range" min="0" max="2" step="0.1" value="${this.Brightness}">
                     </div>
                     <div class="wraperRange">
                          <span>Контрастность:</span>
-                         <input type="range">
+                         <input id="camContrast" type="range" min="0" max="2" step="0.1" value="${this.contrast}">
                     </div>
                 </div>
             </div>
