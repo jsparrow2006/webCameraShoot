@@ -105,3 +105,59 @@
     -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,.3);
     background-color: #bdbdbd;
 }
+
+#settings{
+    height: 100%;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+#headerSettings{
+    background-color: rgba(240, 240,240, .5);
+    text-align: center;
+    height: 20px;
+
+}
+
+#panelSettings{
+    background-color: rgba(240, 240,240, .5);
+    cursor: auto;
+}
+
+#panelSettings .wraperRange{
+    width: 80%;
+    margin: auto;
+    margin-bottom: 10px;
+    margin-top: 5px;
+    text-align: center;
+    font-size: 15px;
+}
+
+
+
+
+#settings input[type=range]:focus {
+    outline: none;
+}
+
+#settings input[type="range"] {
+    -webkit-appearance: none;
+    background-color: black;
+    width: 100%;
+    height: 2px;
+}
+#settings input[type="range"]::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    position: relative;
+    top: 0px;
+    z-index: 1;
+    width: 11px;
+    height: 11px;
+    cursor: pointer;
+    -webkit-border-radius: 40px;
+    -moz-border-radius: 40px;
+    border-radius: 40px;
+    background-image: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#ebf1f6), color-stop(50%,#abd3ee), color-stop(51%,#89c3eb), color-stop(100%,#d5ebfb));
+}

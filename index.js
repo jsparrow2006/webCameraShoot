@@ -19,16 +19,20 @@ class WebCamShoot {
         this.contrast = 1;
         this.isSettings = false;
 
-        cam.addEventListener( "contextmenu", this.settings.bind(this), false);
-        cam.addEventListener("click", this.shootPhoto, false);
+        cam.addEventListener("contextmenu", this.settings.bind(this), false);
+        cam.addEventListener("click", this.shootPhoto.bind(this), false);
         vid.addEventListener("mousemove", this.movieCamera.bind(this), false);
-        this.addOnWheel(this.cam, function(e) {
+        this.addOnWheel(this.cam, function (e) {
             let delta = e.deltaY || e.detail || e.wheelDelta;
             if (delta > 0) scale -= 0.05;
             else scale += 0.05;
 
-            if (scale <= 0.6){scale = 0.6};
-            if (scale >= 1.2){scale = 1.2};
+            if (scale <= 0.6) {
+                scale = 0.6
+            }
+            if (scale >= 1.2) {
+                scale = 1.2
+            }
             console.log(scale)
             console.log('W = ' + defaultWidth * scale)
             console.log('H = ' + defaultHeigth * scale)
@@ -88,45 +92,70 @@ class WebCamShoot {
             };
         navigator.getUserMedia = navigator.getUserMedia || navigator.webkitGetUserMedia || navigator.mozGetUserMedia || navigator.msGetUserMedia;
         window.URL = window.URL || window.webkitURL;
-        navigator.getUserMedia({video: true}, function(stream) {
+        navigator.getUserMedia({video: true}, function (stream) {
             video.src = window.URL.createObjectURL(stream);
             localMediaStream = stream;
         }, onCameraFail);
 
-        let cameraInterval = setInterval(function(){
-            if(localMediaStream){
+        let cameraInterval = setInterval(function () {
+            if (localMediaStream) {
                 ctx.drawImage(video, 0, 0);
-            }}, 1);
+            }
+        }, 1);
     }
 
     shootPhoto() {
-        console.log('SHOOT');
-        console.log('camX = ' + cam.offsetLeft);
-        console.log('camY = ' + cam.offsetTop);
-        console.log('camW = ' + cam.offsetWidth );
-        console.log('camH = ' + cam.offsetHeight);
-        let tempCanvas = document.createElement('canvas');
-        tempCanvas.setAttribute('width', 243);
-        tempCanvas.setAttribute('height', 325);
-        let tempCtx = tempCanvas.getContext('2d');
-        tempCtx.drawImage(canvas, cam.offsetLeft, cam.offsetTop, cam.offsetWidth, cam.offsetHeight, 0, 0, 243, 325);
-        let photoQualityFull = tempCanvas.toDataURL('image/jpeg', 1.0);
-        let gallery = document.getElementById('gallery');
-        let newPhoto = document.createElement('img');
-        newPhoto.setAttribute('class', 'previewImg');
-        newPhoto.setAttribute('src', photoQualityFull);
-        gallery.appendChild(newPhoto);
-    }
-
-    settings(e){
-        e.preventDefault();
-        console.log('SETTINGS')
-        this.isSettings = true
-    }
-
-    movieCamera(e){
         if (!this.isSettings) {
-            console.log(this.isSettings)
+
+            console.log('SHOOT');
+            console.log('camX = ' + cam.offsetLeft);
+            console.log('camY = ' + cam.offsetTop);
+            console.log('camW = ' + cam.offsetWidth);
+            console.log('camH = ' + cam.offsetHeight);
+
+            let tempCanvas = document.createElement('canvas');
+            tempCanvas.setAttribute('width', 243);
+            tempCanvas.setAttribute('height', 325);
+            let tempCtx = tempCanvas.getContext('2d');
+            tempCtx.drawImage(canvas, cam.offsetLeft, cam.offsetTop, cam.offsetWidth, cam.offsetHeight, 0, 0, 243, 325);
+            let photoQualityFull = tempCanvas.toDataURL('image/jpeg', 1.0);
+            let gallery = document.getElementById('gallery');
+            let newPhoto = document.createElement('img');
+            newPhoto.setAttribute('class', 'previewImg');
+            newPhoto.setAttribute('src', photoQualityFull);
+            gallery.appendChild(newPhoto);
+        }
+    }
+
+    settings(e) {
+        e.preventDefault();
+        this.isSettings = !this.isSettings;
+        console.log('SETTINGS MODE = ' + this.isSettings);
+        if (this.isSettings) {
+            this.cam.innerHTML = `
+            <div id="settings">
+                <div id="headerSettings">
+                    Параметры цвета:
+                </div>
+                <div id="panelSettings">
+                    <div class="wraperRange">
+                        <span>Яркость:</span>
+                        <input type="range">
+                    </div>
+                    <div class="wraperRange">
+                         <span>Контрастность:</span>
+                         <input type="range">
+                    </div>
+                </div>
+            </div>
+            `
+        } else {
+            this.cam.innerHTML = '';
+        }
+    }
+
+    movieCamera(e) {
+        if (!this.isSettings) {
             cam.style.left = e.pageX - vid.offsetLeft - cam.offsetWidth / 2 + 'px';
             cam.style.top = e.pageY - vid.offsetTop - cam.offsetHeight / 2 + 'px';
         }
