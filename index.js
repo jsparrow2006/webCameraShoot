@@ -15,7 +15,7 @@ class WebCamShoot {
         this.cam = document.getElementById('cam');
         this.canvas = document.querySelector('#canvas');
         let scale = 1;
-        this.Brightness = 0.7;
+        this.brightness = 0.7;
         this.contrast = 1.2;
         this.isSettings = false;
 
@@ -99,9 +99,10 @@ class WebCamShoot {
 
         let cameraInterval = setInterval(function () {
             if (localMediaStream) {
+                ctx.filter = `brightness(${this.brightness * 100}%) contrast(${this.contrast * 100}%)`;
                 ctx.drawImage(video, 0, 0);
             }
-        }, 1);
+        }.bind(this), 1);
     }
 
     shootPhoto() {
@@ -140,7 +141,7 @@ class WebCamShoot {
                 <div id="panelSettings">
                     <div class="wraperRange">
                         <span>Яркость:</span>
-                        <input id="camBrightness" type="range" min="0" max="2" step="0.1" value="${this.Brightness}">
+                        <input id="camBrightness" type="range" min="0" max="2" step="0.1" value="${this.brightness}">
                     </div>
                     <div class="wraperRange">
                          <span>Контрастность:</span>
@@ -148,7 +149,17 @@ class WebCamShoot {
                     </div>
                 </div>
             </div>
-            `
+            `;
+            let brightness = document.getElementById('camBrightness');
+            let contrast = document.getElementById('camContrast');
+            brightness.addEventListener("input", function() {
+                this.brightness = brightness.value;
+                console.log('Brightnes = ' + this.brightness * 100 + '%');
+            }.bind(this), false);
+            contrast.addEventListener("input", function() {
+                this.contrast = contrast.value;
+                console.log('Contrast = ' + this.contrast * 100 + '%');
+            }.bind(this), false);
         } else {
             this.cam.innerHTML = '';
         }
