@@ -10,8 +10,10 @@
     top: 25px;
     margin: auto;
     width: 100%;
-    background: url("../img/bg.png");
     overflow: hidden;
+    -moz-user-select: none;
+    -khtml-user-select: none;
+    user-select: none;
 }
 
 #vid{

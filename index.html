@@ -10,7 +10,18 @@
 </head>
 <body>
 <script src="index.js"></script>
-<div id='shoot'></div>
+<div style="display: flex; flex-direction: row; width: 100%">
+    <div style="width: 20%; height: 100%; margin-right: 15px">
+        <button style="width: 100%; height: 25px" onclick="console.log(cameraShoot.getPhoto())">Сохранить фото</button>
+        <div style="width: 100%; height: 40px; margin-top: 5px; background-color: #abd3ee; text-align: center;"  onclick="cameraShoot.newPhoto(1)">Иванов И И</div>
+        <div style="width: 100%; height: 40px; margin-top: 5px; background-color: #abd3ee; text-align: center;"  onclick="cameraShoot.newPhoto(2)">Петров П П</div>
+        <div style="width: 100%; height: 40px; margin-top: 5px; background-color: #abd3ee; text-align: center;"  onclick="cameraShoot.newPhoto(3)">Сергеев С С</div>
+        <div style="width: 100%; height: 40px; margin-top: 5px; background-color: #abd3ee; text-align: center;"  onclick="cameraShoot.newPhoto(4)">Павлов П П</div>
+        <div style="width: 100%; height: 40px; margin-top: 5px; background-color: #abd3ee; text-align: center;"  onclick="cameraShoot.newPhoto(5)">Николаев Н Н</div>
+    </div>
+    <div id='shoot' style="width: 80%"></div>
+</div>
+
 <script>
     var cameraDiv = document.getElementById('shoot');
     var cameraShoot = new WebCamShoot(cameraDiv, 243, 325)
