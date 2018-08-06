@@ -49,7 +49,7 @@ class WebCamShoot {
             cam.style.top = e.pageY - vid.offsetTop - cam.offsetHeight / 2 + 'px';
             e.preventDefault();
         });
-        this.startVideo();
+        this.startVideo().bind(this);
 
     }
 
@@ -94,6 +94,7 @@ class WebCamShoot {
             localMediaStream = null,
             onCameraFail = function (e) {
                 console.log('Camera did not work.', e);
+                document.getElementById('vid').classList.add('noCamera')
             };
         navigator.getUserMedia = navigator.getUserMedia || navigator.webkitGetUserMedia || navigator.mozGetUserMedia || navigator.msGetUserMedia;
         window.URL = window.URL || window.webkitURL;
