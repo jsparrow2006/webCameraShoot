@@ -64,8 +64,8 @@ class WebCamShoot {
 
             cam.style.width = Math.floor(defaultWidth * scale) + 'px';
             cam.style.height = Math.floor(defaultHeigth * scale) + 'px';
-            cam.style.left = e.pageX - mainFrame.getBoundingClientRect().left - vid.offsetLeft - cam.offsetWidth / 2 + 'px';
-            cam.style.top = e.pageY - mainFrame.getBoundingClientRect().top - vid.offsetTop - cam.offsetHeight / 2 + 'px';
+            cam.style.left = e.pageX - vid.getBoundingClientRect().left - cam.offsetWidth / 2 + 'px';
+            cam.style.top = e.pageY - this.parent.offsetTop - cam.offsetHeight + 10 + 'px';
             e.preventDefault();
         });
 
@@ -199,7 +199,7 @@ class WebCamShoot {
         if (!this.isSettings) {
             console.log(this.parent.offsetTop)
             cam.style.left = e.pageX - vid.getBoundingClientRect().left - cam.offsetWidth / 2 + 'px';
-            cam.style.top = e.pageY - this.parent.offsetTop - cam.offsetHeight / 2 + 'px';
+            cam.style.top = e.pageY - this.parent.offsetTop - cam.offsetHeight + 10 + 'px';
         }
     }
 
