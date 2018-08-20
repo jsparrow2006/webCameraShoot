@@ -123,7 +123,7 @@ class WebCamShoot {
             localMediaStream = stream;
         }.bind(this), onCameraFail.bind(this));
         let cameraInterval = setInterval(function () {
-            if (localMediaStream) {
+            if (localMediaStream || this.modeEdit) {
                 ctx.filter = `brightness(${this.brightness * 100}%) contrast(${this.contrast * 100}%)`;
                 if (!this.modeEdit) {
                     ctx.drawImage(video, 0, 0);
