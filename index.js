@@ -1,7 +1,7 @@
 'use strict';
 
 class WebCamShoot {
-    constructor(parentBlock, defaultWidth, defaultHeigth) {
+    constructor(parentBlock, defaultWidth, defaultHeigth, getPhotoFunc) {
         this.parent = parentBlock;
         this.cameraWidth = defaultWidth;
         this.cameraHeigth = defaultHeigth;
@@ -33,6 +33,7 @@ class WebCamShoot {
         }
         this.selectedPhoto = '';
         this.isCameraConnected = false;
+        this.getPhoto = getPhotoFunc;
 
         let cameraConnect = setInterval(function () {
             if (!this.isCameraConnected) {
@@ -83,6 +84,7 @@ class WebCamShoot {
             </div>
             <div id="bottomPanel">
                 <div id="gallery">
+                
                 </div>
             </div>
         </div>
@@ -151,10 +153,11 @@ class WebCamShoot {
             let photoQualityFull = tempCanvas.toDataURL('image/jpeg', 1.0);
             this.userPhoto.imgData = photoQualityFull;
             let gallery = document.getElementById('gallery');
-            let newPhoto = document.createElement('img');
-            newPhoto.setAttribute('class', 'previewImg');
-            newPhoto.setAttribute('src', photoQualityFull);
-            gallery.appendChild(newPhoto);
+            gallery.innerHTML = gallery.innerHTML + `
+                    <div class="tumbnail">
+                    <img class="previewImg" src="${photoQualityFull}" alt="">
+                    <div class="tumbPanel" onclick="this.getPhoto(this.parentElement.getElementsByClassName('previewImg')[0].src)"></div>
+                </div>`
         }
     }
 
@@ -238,9 +241,9 @@ class WebCamShoot {
         img.src = imgUrl;
     }
 
-    getPhoto(){
-        if(this.userPhoto.id !== -1){
-            return this.userPhoto;
-        }
-    }
+    // getPhoto(){
+    //     if(this.userPhoto.id !== -1){
+    //         return this.userPhoto;
+    //     }
+    // }
 }
