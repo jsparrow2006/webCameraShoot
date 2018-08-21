@@ -44,6 +44,7 @@ class WebCamShoot {
             }
         }.bind(this), 1);
 
+
         cam.addEventListener("contextmenu", this.settings.bind(this), false);
         cam.addEventListener("click", this.shootPhoto.bind(this), false);
         vid.addEventListener("mousemove", this.movieCamera.bind(this), false);
@@ -58,10 +59,6 @@ class WebCamShoot {
             if (scale >= 1.2) {
                 scale = 1.2
             }
-            console.log(scale)
-            console.log('W = ' + defaultWidth * scale)
-            console.log('H = ' + defaultHeigth * scale)
-            // cam.style.transform = cam.style.WebkitTransform = cam.style.MsTransform = 'scale(' + scale + ')';
 
             cam.style.width = Math.floor(defaultWidth * scale) + 'px';
             cam.style.height = Math.floor(defaultHeigth * scale) + 'px';
@@ -139,26 +136,29 @@ class WebCamShoot {
     shootPhoto() {
         if (!this.isSettings) {
 
-            console.log('SHOOT');
-            console.log('camX = ' + cam.offsetLeft);
-            console.log('camY = ' + cam.offsetTop);
-            console.log('camW = ' + cam.offsetWidth);
-            console.log('camH = ' + cam.offsetHeight);
-
             let tempCanvas = document.createElement('canvas');
             tempCanvas.setAttribute('width', 243);
             tempCanvas.setAttribute('height', 325);
             let tempCtx = tempCanvas.getContext('2d');
             tempCtx.drawImage(canvas, cam.offsetLeft, cam.offsetTop, cam.offsetWidth, cam.offsetHeight, 0, 0, 243, 325);
             let photoQualityFull = tempCanvas.toDataURL('image/jpeg', 1.0);
-            this.userPhoto.imgData = photoQualityFull;
             let gallery = document.getElementById('gallery');
             gallery.innerHTML = gallery.innerHTML + `
                     <div class="tumbnail">
                     <img class="previewImg" src="${photoQualityFull}" alt="">
-                    <div class="tumbPanel" onclick="this.getPhoto(this.parentElement.getElementsByClassName('previewImg')[0].src)"></div>
-                </div>`
+                    <div class="tumbPanel"></div>
+                </div>`;
+            let butSave = document.getElementsByClassName('tumbPanel');
+            for(var xx=0; xx < butSave.length; xx++)
+            {
+                butSave.item(xx).addEventListener('click', this.savePhoto.bind(this), false);
+            }
         }
+    }
+
+    savePhoto(e){
+        this.userPhoto.imgData = e.target.parentElement.getElementsByClassName('previewImg')[0].src;
+        this.getPhoto(this.userPhoto)
     }
 
     settings(e) {
@@ -187,11 +187,9 @@ class WebCamShoot {
             let contrast = document.getElementById('camContrast');
             brightness.addEventListener("input", function() {
                 this.brightness = brightness.value;
-                console.log('Brightnes = ' + this.brightness * 100 + '%');
             }.bind(this), false);
             contrast.addEventListener("input", function() {
                 this.contrast = contrast.value;
-                console.log('Contrast = ' + this.contrast * 100 + '%');
             }.bind(this), false);
         } else {
             this.cam.innerHTML = '';
@@ -200,7 +198,6 @@ class WebCamShoot {
 
     movieCamera(e) {
         if (!this.isSettings) {
-            console.log(this.parent.offsetTop)
             cam.style.left = e.pageX - vid.getBoundingClientRect().left - cam.offsetWidth / 2 + 'px';
             cam.style.top = e.pageY - this.parent.offsetTop - cam.offsetHeight + 10 + 'px';
         }
@@ -240,10 +237,4 @@ class WebCamShoot {
         }.bind(this);
         img.src = imgUrl;
     }
-
-    // getPhoto(){
-    //     if(this.userPhoto.id !== -1){
-    //         return this.userPhoto;
-    //     }
-    // }
 }
