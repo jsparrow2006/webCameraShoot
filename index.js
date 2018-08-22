@@ -49,6 +49,7 @@ class WebCamShoot {
         cam.addEventListener("click", this.shootPhoto.bind(this), false);
         vid.addEventListener("mousemove", this.movieCamera.bind(this), false);
         this.addOnWheel(this.cam, function (e) {
+            e.preventDefault();
             let delta = e.deltaY || e.detail || e.wheelDelta;
             if (delta > 0) scale -= 0.05;
             else scale += 0.05;
