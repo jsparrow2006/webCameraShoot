@@ -212,6 +212,8 @@ class WebCamShoot {
     }
 
     editPhoto(id, imgUrl){
+        console.log(typeof imgUrl)
+        console.log(imgUrl)
         this.modeEdit = true;
         this.userPhoto.id = id;
         document.getElementById('gallery').innerHTML = '';
@@ -236,6 +238,10 @@ class WebCamShoot {
                 this.editablePhoto.sY = 0;
             }
         }.bind(this);
-        img.src = imgUrl;
+        if (typeof imgUrl === 'object'){
+            img.src = URL.createObjectURL(imgUrl[0]);
+        } else {
+            img.src = imgUrl;
+        }
     }
 }
