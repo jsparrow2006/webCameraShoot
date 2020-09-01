@@ -119,7 +119,7 @@ class WebCamShoot {
         this.isCameraConnected = true;
         navigator.getUserMedia({video: true}, function (stream) {
             //
-            video.src = window.URL.createObjectURL(stream);
+            video.srcObject = stream;
             localMediaStream = stream;
         }.bind(this), onCameraFail.bind(this));
         let cameraInterval = setInterval(function () {
